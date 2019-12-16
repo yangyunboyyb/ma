@@ -1,0 +1,76 @@
+<form
+                    id='load'
+                    method="post"
+                    encType="multipart/form-data"
+                    action="http://127.0.0.1:3001"
+                >
+                    <input type="text" name="file_list" id='file_list' hidden />
+                    <Row>
+                        <Col span={8} push={2}>
+                            <Input
+                                placeholder="项目名称"
+                                type="text"
+                                name="pro_name"
+                                autoFocus
+                                required
+                                style={{ height: '30px', width: '150px' }}
+                            />
+                        </Col>
+                        <Col span={7} pull={3}>
+                            <input
+                                type="file"
+                                className='upload'
+                                name="upload"
+                                onChange={this.onChange}
+                                webkitdirectory="true"
+                                multiple
+                                style={{ width: '180px' }}
+                            />
+                        </Col>
+                        <Col span={7} pull={6}>
+                            <input type="button" value='上传' onClick={this.onClick} />
+                        </Col>
+                        <Col span={2} pull={11}>
+                            <a href={this.state.url} > {this.state.word}</a>
+                        </Col>
+                    </Row>
+                </form>
+
+
+
+
+
+
+                 onClick() {
+        self.setState({
+            word: '上传中，请稍等....',
+            url: ''
+        })
+        let data = new FormData(document.getElementById("load"))
+        let xhr = new XMLHttpRequest();
+        xhr.open("post", "http://10.88.0.193:5263", false)
+        xhr.onload = function (e) {
+            self.setState({
+                word: '上传成功，点击跳转',
+                url: this.responseText
+            })
+            console.log(this.responseText)
+        }
+        xhr.send(data)
+    }
+
+
+
+    onChange(event) {
+        self.setState({
+            word: '',
+            url: ''
+        })
+        let output = document.getElementById("file_list");
+        let files = event.target.files;
+        let file_list = []
+        for (var i = 0; i < files.length; i++) {
+            file_list[i] = files[i].webkitRelativePath
+        }
+        output.value = JSON.stringify(file_list)
+    }

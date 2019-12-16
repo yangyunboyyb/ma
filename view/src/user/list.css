@@ -1,0 +1,14 @@
+/* .ant-table-tbody>tr>td:hover {
+    background: rgb(255,255,255,255) !important;
+} */
+
+.ant-table-thead>tr>th> {
+
+    text-align: center;
+
+}
+
+.ant-table-tbody>tr>td {
+
+    text-align: center;
+}
